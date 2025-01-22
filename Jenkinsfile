@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') { //nece da radi bez checkout-a
+        stage('Checkout') { //nece da radi bez checkout-a; multibranch pipeline
             steps {
                 checkout([$class: 'GitSCM', 
                           branches: [[name: '*/main']],
