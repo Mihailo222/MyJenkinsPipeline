@@ -76,6 +76,7 @@ pipeline {
     }
 
     stage('Check DockerHub credentials ') {
+        steps {
         withCredentials([
             usernamePassword(credentialsId: 'dockerhub-svc-account', usernameVariable: 'SVCUSERNAME', passwordVariable: 'SVCPASSWD')        
         ])
@@ -97,6 +98,7 @@ pipeline {
 
          }   
         }
+    }
     }
 
         
