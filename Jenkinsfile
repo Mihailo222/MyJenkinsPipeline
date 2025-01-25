@@ -116,7 +116,7 @@ pipeline {
 
               if(status == 0){
                   echo "SUCESSFULLY LOGGED IN TO DOCKERHUB."
-                  break
+                  return
               } else {
                   echo "FAILED TO LOG IN TO DOCKERHUB WITH SERVICE ACCOUNT ${credentialsId}"
               }
