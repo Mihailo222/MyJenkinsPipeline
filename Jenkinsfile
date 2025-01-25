@@ -57,7 +57,7 @@ pipeline {
             }
             }
        }
-
+/*
     stage('Login to Docker Hub via service account from cloud configurable VM'){
 
     steps {
@@ -76,7 +76,7 @@ pipeline {
          }   
         }
     }
-    }
+    }*/
 
     stage('Check DockerHub credentials ') { // HOCU DA POST OVOG STAGE-A BRISE FOLDER /root/.docker/config.json. !!!
 
