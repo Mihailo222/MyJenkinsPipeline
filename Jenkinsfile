@@ -82,7 +82,7 @@ pipeline {
 
         steps {
             script {
-            logInWithServiceAccount()
+            logInWithServiceAccount(serviceAccounts)
             }
     }
 }
@@ -120,7 +120,7 @@ def checkServiceAccount(String credentialsId, String username, String password){
 }
 
 
-def logInWithServiceAccount(){
+def logInWithServiceAccount(String[] serviceAccounts){
          
 
         for ( String svc_acc : serviceAccounts ) {
