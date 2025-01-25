@@ -94,11 +94,11 @@ pipeline {
                 String SA_user="${SVCUSERNAME}"
                 String SA_pass="${SVCPASSWD}"
                 String credentialsId="dockerhub-svc-account"
-                sh """
+             /*   sh """
                 echo "${SA_user}"
                 echo "${SA_pass}"
                 
-                """
+                """*/
                 checkServiceAccount(credentialsId, SA_user, SA_pass)
             
             }
