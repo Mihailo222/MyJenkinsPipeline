@@ -132,19 +132,11 @@ pipeline {
 
 
 def checkServiceAccount(String credentialsId, String username, String password){
-//prima credential iz COMMON-a
-   /* sh """
-    echo "Credentials Id: ${credentialsId}"
-    echo "Username: ${username}"
-    echo "${password}"
-    """*/
-    
-    /*sh """
-    docker login --username ${username} --password ${password}
-    """*/
    
-    def status=sh(script: 'docker login --username ${username} --password ${password}', returnStatus: true)
-    
+    def status=sh(script: """
+                  docker login --username '${username}' --password '${password}'
+                  """,  returnStatus: true
+                  )  
     if (status == 0){
         echo "SUCCESSFULLY LOGGED IN TO DOCKERHUB."
     } else {
