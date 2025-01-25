@@ -91,7 +91,7 @@ pipeline {
         echo "SERVICE ACCOUNT USED FOR LOGGING IN: ${svc_acc}"
         
         withCredentials([
-            usernamePassword(credentialsId: 'dockerhub-svc-account', usernameVariable: 'SVCUSERNAME', passwordVariable: 'SVCPASSWD')        
+            usernamePassword(credentialsId: "${svc_acc}", usernameVariable: 'SVCUSERNAME', passwordVariable: 'SVCPASSWD')        
         ])
         { //get username and password from usernamePassword Jenkins global credential representing service account that stores credentials for dockerhub
          withCredentials([
