@@ -126,9 +126,7 @@ pipeline {
 
          }   
         }
-        dir("/home/myawesomeprojectwideuser/.docker"){
-            deleteDir()
-        }
+            
         dir("/root/.docker"){
             deleteDir()
         }
