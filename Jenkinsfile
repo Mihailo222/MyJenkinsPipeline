@@ -133,13 +133,18 @@ def checkServiceAccount(String credentialsId, String username, String password){
     echo "Username: ${username}"
     echo "${password}"
     """*/
-
-    sh """
+    
+    /*sh """
     docker login --username ${username} --password ${password}
-    """
+    """*/
+   
+    def status=sh(script: 'docker login --username ${username} --password ${password}', returnStatus: true)
     
-
-    
+    if (status == 0){
+        echo "SUCCESSFULLY LOGGED IN TO DOCKERHUB."
+    } else {
+        echo "FAILED TO LOG IN TO DOCKERHUB."
+    }
 }
 
 
