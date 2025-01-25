@@ -1,7 +1,7 @@
 //pipeline variables
 boolean deleteWorkspace=false
 //LIST OF AVAILABLE SERVICE ACCOUNTS FOR LOGGING INTO DOCKERHUB ...........................................................................................................
-String[] serviceAccounts=["failling_sa","dockerhub-svc-account"]
+String[] serviceAccounts=["failing_sa","dockerhub-svc-account"]
 
 pipeline {
     
