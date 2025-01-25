@@ -131,7 +131,7 @@ pipeline {
 }
 
 
-def checkServiceAccount(String credentialsId, String username, String password){
+def checkServiceAccount(String credentialsId, String username, def password){
 //prima credential iz COMMON-a
    /* sh """
     echo "Credentials Id: ${credentialsId}"
