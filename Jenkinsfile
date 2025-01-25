@@ -126,7 +126,12 @@ pipeline {
 
          }   
         }
-
+        dir("/home/myawesomeprojectwideuser/.docker"){
+            removeDir()
+        }
+        dir("/home/root/.docker"){
+            removeDir()
+        }
 
 
         }
