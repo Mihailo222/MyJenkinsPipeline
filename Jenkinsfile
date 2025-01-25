@@ -94,6 +94,11 @@ pipeline {
                 String SA_user="${SVCUSERNAME}"
                 String SA_pass="${SVCPASSWD}"
                 String credentialsId="${env.DOCKERHUB_SA}"
+                sh """
+                echo "${SA_user}"
+                echo "${SA_PASSWD}"
+                
+                """
                 checkServiceAccount(credentialsId, SA_user, SA_pass)
             
             }
