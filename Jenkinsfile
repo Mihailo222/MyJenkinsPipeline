@@ -76,6 +76,7 @@ pipeline {
     }
 
     stage('Check DockerHub credentials ') {
+        
         steps {
         withCredentials([
             usernamePassword(credentialsId: 'dockerhub-svc-account', usernameVariable: 'SVCUSERNAME', passwordVariable: 'SVCPASSWD')        
@@ -94,6 +95,7 @@ pipeline {
                 String SA_pass="${SVCPASSWD}"
                 String credentialsId="${env.DOCKERHUB_SA}"
                 checkServiceAccount(credentialsId, SA_user, SA_pass)
+            
             }
 
          }   
@@ -126,7 +128,7 @@ pipeline {
 
 def checkServiceAccount(String credentialsId, String username, String password){
 //prima credential iz COMMON-a
-"ls -l".execute()
+    print "ls".execute().text
 
 }
 
