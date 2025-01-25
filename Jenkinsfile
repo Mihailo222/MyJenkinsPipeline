@@ -78,7 +78,7 @@ pipeline {
     }
     }
 
-    stage('Check DockerHub credentials ') {
+    stage('Check DockerHub credentials ') { // HOCU DA POST OVOG STAGE-A BRISE FOLDER /root/.docker/config.json. !!!
 
 
         
@@ -112,8 +112,14 @@ pipeline {
                 echo "${SA_pass}"
                 
                 """*/
-                checkServiceAccount(credentialsId, SA_user, SA_pass)
-            
+              int status=checkServiceAccount(credentialsId, SA_user, SA_pass)
+
+              if(status == 0){
+                  echo "SUCESSFULLY LOGGED IN TO DOCKERHUB."
+                  break;
+              } else {
+                  echo "FAILED TO LOG IN TO DOCKERHUB WITH SERVICE ACCOUNT ${credentialsId}"
+              }
 //            }
 
          }   
@@ -156,12 +162,14 @@ def checkServiceAccount(String credentialsId, String username, String password){
     def status=sh(script: """
                   docker login --username \"${username}\" --password \"${password}\"
                   """,  returnStatus: true
-                  )  
-    if (status == 0){
+                  )
+    
+    /*if (status == 0){
         echo "SUCCESSFULLY LOGGED IN TO DOCKERHUB."
     } else {
         echo "FAILED TO LOG IN TO DOCKERHUB."
-    }
+    }*/
+    return status
 }
 
 
