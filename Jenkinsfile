@@ -26,12 +26,12 @@ pipeline {
             echo "Build finished."
             echo "This is the workspace build happened in: ${env.WORKSPACE}"
             script {
-                dir("${env.WORKSPACE}@tmp"){
+                dir("${env.WORKSPACE}@tmp"){ // pipelineScreenName_branch@tmp
                     deleteDir()
                 }
                 if(deleteWorkspace == true){
                     echo "Cleaning workspace..."
-                    dir("${env.WORKSPACE}"){
+                    dir("${env.WORKSPACE}"){  // pipelineScreenName_branchName
                         deleteDir()
                     }
                 }
