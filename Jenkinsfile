@@ -34,7 +34,7 @@ pipeline {
             withCredentials([sshUserPrivateKey(credentialsId: 'ansible_deployed_cloud_vm', keyFileVariable: 'MY_SSH_KEY', usernameVariable: 'MY_SSH_USERNAME')]) //custom name for keyFileVariable for referencing later in the pipeline
             {
                 sh '''
-                    ssh -i $MY_SSH_KEY ${MY_SSH_USERNAME}@${CLOUD_VM_IP} "whoami"
+                    ssh -i $MY_SSH_KEY ${MY_SSH_USERNAME}@${CLOUD_VM_IP} "ls -la"
                 '''
             }
             }
