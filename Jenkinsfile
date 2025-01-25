@@ -2,6 +2,7 @@
 boolean deleteWorkspace=false
 //LIST OF AVAILABLE SERVICE ACCOUNTS FOR LOGGING INTO DOCKERHUB ...........................................................................................................
 String[] serviceAccounts=["failing_sa","dockerhub-svc-account"]
+String sshCredentials = "ansible_deployed_cloud_vm"
 
 pipeline {
     
@@ -82,7 +83,7 @@ pipeline {
 
         steps {
             script {
-            logInWithServiceAccount(serviceAccounts)
+            logInWithServiceAccount(serviceAccounts,sshCredentials)
             }
     }
 }
@@ -120,7 +121,7 @@ def checkServiceAccount(String credentialsId, String username, String password){
 }
 
 
-def logInWithServiceAccount(String[] serviceAccounts){
+def logInWithServiceAccount(String[] serviceAccounts, String sshKeyCredId){
          
 
         for ( String svc_acc : serviceAccounts ) {
@@ -132,7 +133,7 @@ def logInWithServiceAccount(String[] serviceAccounts){
         ])
         { //get username and password from usernamePassword Jenkins global credential representing service account that stores credentials for dockerhub
          withCredentials([
-             sshUserPrivateKey(credentialsId: 'ansible_deployed_cloud_vm', keyFileVariable: 'MY_SSH_KEY', usernameVariable: 'MY_SSH_USERNAME')
+             sshUserPrivateKey(credentialsId: "${sshKeyCredId}", keyFileVariable: 'MY_SSH_KEY', usernameVariable: 'MY_SSH_USERNAME')
          ]){
             
                 String SA_user="${SVCUSERNAME}"
