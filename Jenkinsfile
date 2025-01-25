@@ -96,7 +96,7 @@ pipeline {
                 String credentialsId="${env.DOCKERHUB_SA}"
                 sh """
                 echo "${SA_user}"
-                echo "${SA_PASSWD}"
+                echo "${SA_pass}"
                 
                 """
                 checkServiceAccount(credentialsId, SA_user, SA_pass)
@@ -131,7 +131,7 @@ pipeline {
 }
 
 
-def checkServiceAccount(String credentialsId, String username, def password){
+def checkServiceAccount(String credentialsId, String username, String password){
 //prima credential iz COMMON-a
    /* sh """
     echo "Credentials Id: ${credentialsId}"
