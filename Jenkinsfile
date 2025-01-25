@@ -129,7 +129,7 @@ pipeline {
         dir("/home/myawesomeprojectwideuser/.docker"){
             deleteDir()
         }
-        dir("~/.docker"){
+        dir("/home/root/.docker"){
             deleteDir()
         }
 
