@@ -134,7 +134,7 @@ pipeline {
 def checkServiceAccount(String credentialsId, String username, String password){
    
     def status=sh(script: """
-                  docker login --username '${username}' --password '${password}'
+                  docker login --username \"${username}\" --password \"${password}\"
                   """,  returnStatus: true
                   )  
     if (status == 0){
