@@ -86,7 +86,7 @@ pipeline {
 
         script {
 
-            
+        for ( String svc_acc : serviceAccounts ) {
         
         withCredentials([
             usernamePassword(credentialsId: 'dockerhub-svc-account', usernameVariable: 'SVCUSERNAME', passwordVariable: 'SVCPASSWD')        
@@ -100,11 +100,13 @@ pipeline {
                     ssh -i $MY_SSH_KEY ${MY_SSH_USERNAME}@${CLOUD_VM_IP} "docker login --username ${SVCUSERNAME} --password ${SVCPASSWD}"
                 '''*/
  //           script {
-
+                
     
                 String SA_user="${SVCUSERNAME}"
                 String SA_pass="${SVCPASSWD}"
-                String credentialsId="dockerhub-svc-account"
+              //  String credentialsId="dockerhub-svc-account"
+                String credentialsId=svc_acc
+             
              /*   sh """
                 echo "${SA_user}"
                 echo "${SA_pass}"
@@ -119,6 +121,7 @@ pipeline {
 
 
 
+        }
 
         }
             
