@@ -79,7 +79,7 @@ pipeline {
         
         steps {
         withCredentials([
-            usernamePassword(credentialsId: '${env.DOCKERHUB_SA}', usernameVariable: 'SVCUSERNAME', passwordVariable: 'SVCPASSWD')        
+            usernamePassword(credentialsId: 'dockerhub-svc-account', usernameVariable: 'SVCUSERNAME', passwordVariable: 'SVCPASSWD')        
         ])
         { //get username and password from usernamePassword Jenkins global credential representing service account that stores credentials for dockerhub
          withCredentials([
@@ -93,7 +93,7 @@ pipeline {
 
                 String SA_user="${SVCUSERNAME}"
                 String SA_pass="${SVCPASSWD}"
-                String credentialsId="${env.DOCKERHUB_SA}"
+                String credentialsId="dockerhub-svc-account"
                 sh """
                 echo "${SA_user}"
                 echo "${SA_pass}"
