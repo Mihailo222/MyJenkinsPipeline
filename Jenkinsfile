@@ -27,7 +27,7 @@ pipeline {
             withCredentials([sshUserPrivateKey(credentialsId: 'ansible_deployed_cloud_vm', keyFileVariable: 'MY_SSH_KEY')])
             {
                 sh '''
-                    ssh -i $MY_SSH_KEY myawesomeprojectwideuser@40.85.177.80 "whoami"
+                    ssh -i $MY_SSH_KEY myawesomeprojectwideuser@10.0.1.6 "whoami"
                 '''
             }
             }
