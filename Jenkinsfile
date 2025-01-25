@@ -1,3 +1,7 @@
+//pipeline variables
+deleteWorkspace=true
+
+
 pipeline {
     agent {label 'agent1'}
 
@@ -17,6 +21,24 @@ pipeline {
             }
         }
     }
+    post {
+        always {
+            echo "Build finished."
+            echo "This is the workspace build happened in: ${env.WORKSPACE}"
+            script {
+                dir("${env.WORKSPACE}@tmp"){
+                    deleteDir()
+                }
+                if(deleteWorkspace == true){
+                    echo "Cleaning workspace..."
+                    dir("${env.WORKSPACE}"){
+                        deleteDir()
+                    }
+                }
+            } 
+        }
+    }
+    
 }
 
 
