@@ -1,8 +1,10 @@
 //pipeline variables
-deleteWorkspace=false
-
+boolean deleteWorkspace=false
+//LIST OF AVAILABLE SERVICE ACCOUNTS FOR LOGGING INTO DOCKERHUB ...........................................................................................................
+String[] serviceAccounts=["dockerhub-svc-account","failling_sa"]
 
 pipeline {
+    
     agent {label 'agent1'}
     environment {
         //ARTIFACTORY_CREDENTIALS = "${CONSTANTS.ServiceAccountUser}"
@@ -76,8 +78,11 @@ pipeline {
     }
 
     stage('Check DockerHub credentials ') {
+
+
         
-        steps {
+        script {
+        
         withCredentials([
             usernamePassword(credentialsId: 'dockerhub-svc-account', usernameVariable: 'SVCUSERNAME', passwordVariable: 'SVCPASSWD')        
         ])
@@ -89,8 +94,9 @@ pipeline {
            /* sh '''
                     ssh -i $MY_SSH_KEY ${MY_SSH_USERNAME}@${CLOUD_VM_IP} "docker login --username ${SVCUSERNAME} --password ${SVCPASSWD}"
                 '''*/
-            script {
+//            script {
 
+    
                 String SA_user="${SVCUSERNAME}"
                 String SA_pass="${SVCPASSWD}"
                 String credentialsId="dockerhub-svc-account"
@@ -101,7 +107,7 @@ pipeline {
                 """*/
                 checkServiceAccount(credentialsId, SA_user, SA_pass)
             
-            }
+//            }
 
          }   
         }
