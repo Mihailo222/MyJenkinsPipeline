@@ -75,6 +75,30 @@ pipeline {
     }
     }
 
+    stage('Check DockerHub credentials ') {
+        withCredentials([
+            usernamePassword(credentialsId: 'dockerhub-svc-account', usernameVariable: 'SVCUSERNAME', passwordVariable: 'SVCPASSWD')        
+        ])
+        { //get username and password from usernamePassword Jenkins global credential representing service account that stores credentials for dockerhub
+         withCredentials([
+             sshUserPrivateKey(credentialsId: 'ansible_deployed_cloud_vm', keyFileVariable: 'MY_SSH_KEY', usernameVariable: 'MY_SSH_USERNAME')
+         ]){
+            
+           /* sh '''
+                    ssh -i $MY_SSH_KEY ${MY_SSH_USERNAME}@${CLOUD_VM_IP} "docker login --username ${SVCUSERNAME} --password ${SVCPASSWD}"
+                '''*/
+            script {
+
+                String SA_user="${SVCUSERNAME}"
+                String SA_pass="${SVCPASSWD}"
+                String credentialsId="${credentialsID}"
+                checkServiceAccount(credentialsId, SA_user, SA_pass)
+            }
+
+         }   
+        }
+    }
+
         
     }
     post {
@@ -95,6 +119,12 @@ pipeline {
         }
     }
     
+}
+
+
+def checkServiceAccount(String credentialsId, String username, String password){
+//prima credential iz COMMON-a
+
 }
 
 
