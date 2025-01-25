@@ -1,5 +1,5 @@
 //pipeline variables
-deleteWorkspace=true
+deleteWorkspace=false
 
 
 pipeline {
