@@ -81,7 +81,7 @@ pipeline {
 
 
         
-        script {
+        steps {
         
         withCredentials([
             usernamePassword(credentialsId: 'dockerhub-svc-account', usernameVariable: 'SVCUSERNAME', passwordVariable: 'SVCPASSWD')        
@@ -94,7 +94,7 @@ pipeline {
            /* sh '''
                     ssh -i $MY_SSH_KEY ${MY_SSH_USERNAME}@${CLOUD_VM_IP} "docker login --username ${SVCUSERNAME} --password ${SVCPASSWD}"
                 '''*/
-//            script {
+            script {
 
     
                 String SA_user="${SVCUSERNAME}"
@@ -107,7 +107,7 @@ pipeline {
                 """*/
                 checkServiceAccount(credentialsId, SA_user, SA_pass)
             
-//            }
+            }
 
          }   
         }
