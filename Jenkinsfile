@@ -92,7 +92,7 @@ pipeline {
 
                 String SA_user="${SVCUSERNAME}"
                 String SA_pass="${SVCPASSWD}"
-                String credentialsId="${credentialsID}"
+                String credentialsId="${env.DOCKERHUB_SA}"
                 checkServiceAccount(credentialsId, SA_user, SA_pass)
             }
 
