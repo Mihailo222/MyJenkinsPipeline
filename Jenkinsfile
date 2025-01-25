@@ -4,6 +4,12 @@ deleteWorkspace=false
 
 pipeline {
     agent {label 'agent1'}
+    environment {
+        //ARTIFACTORY_CREDENTIALS = "${CONSTANTS.ServiceAccountUser}"
+        CLOUD_VM_IP="10.0.1.6"
+        
+        
+    }
 
     stages {
  //       stage('Checkout') { //nece da radi bez checkout-a; multibranch pipeline
@@ -11,8 +17,8 @@ pipeline {
  //               checkout([$class: 'GitSCM', 
  //                         branches: [[name: '*/main']],
  //                         userRemoteConfigs: [[url: 'https://github.com/Mihailo222/MyJenkinsPipeline.git']]])
-//            }
-  //      }
+ //            }
+ //      }
 
         stage('Whoami') {
             steps {
@@ -20,14 +26,15 @@ pipeline {
                 sh 'whoami'
             }
         }
-        stage('Login to cloud VM via SSH'){
+        
+        stage('Connect to cloud VM via SSH'){
             steps{
 
             echo "Stage: ${env.STAGE_NAME}"
-            withCredentials([sshUserPrivateKey(credentialsId: 'ansible_deployed_cloud_vm', keyFileVariable: 'MY_SSH_KEY')])
+            withCredentials([sshUserPrivateKey(credentialsId: 'ansible_deployed_cloud_vm', keyFileVariable: 'MY_SSH_KEY', usernameVariable: 'MY_SSH_USERNAME')]) //custom name for keyFileVariable for referencing later in the pipeline
             {
                 sh '''
-                    ssh -i $MY_SSH_KEY myawesomeprojectwideuser@10.0.1.6 "whoami"
+                    ssh -i $MY_SSH_KEY ${MY_SSH_USERNAME}@${CLOUD_VM_IP} "whoami"
                 '''
             }
             }
