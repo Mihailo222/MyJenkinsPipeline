@@ -7,7 +7,9 @@ pipeline {
     environment {
         //ARTIFACTORY_CREDENTIALS = "${CONSTANTS.ServiceAccountUser}"
         CLOUD_VM_IP="10.0.1.6"
-        
+        DOCKERHUB_FAILING_SA="failing_sa"
+        DOCKERHUB_SA="dockerhub-svc-account"
+        CLOUD_CONF_VM_CREDS="ansible_deployed_cloud_vm"
         
     }
 
@@ -58,9 +60,7 @@ pipeline {
 
     steps {
         withCredentials([
-            usernamePassword(credentialsId: 'dockerhub-svc-account', usernameVariable: 'SVCUSERNAME', passwordVariable: 'SVCPASSWD')
-            //sshUserPrivateKey(credentialsId: 'ansible_deployed_cloud_vm', keyFileVariable: 'MY_SSH_KEY', usernameVariable: 'MY_SSH_USERNAME')
-        
+            usernamePassword(credentialsId: 'failing_sa', usernameVariable: 'SVCUSERNAME', passwordVariable: 'SVCPASSWD')        
         ])
         { //get username and password from usernamePassword Jenkins global credential representing service account that stores credentials for dockerhub
          withCredentials([
