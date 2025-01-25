@@ -26,7 +26,7 @@ pipeline {
             echo "Stage: ${env.STAGE_NAME}"
             withCredentials([sshUserPrivateKey(credentialsId: 'ansible_deployed_cloud_vm', keyFileVariable: 'MY_SSH_KEY')])
             {
-                ssh '''
+                sh '''
                     ssh -i $MY_SSH_KEY myawesomeprojectwideuser@40.85.177.80 "whoami"
                 '''
             }
