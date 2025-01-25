@@ -54,15 +54,21 @@ pipeline {
             }
        }
 
+    stage('Login to Docker Hub via service account from cloud configurable VM'){
+        withCredentials([usernamePassword(credentialsId: 'dockerhub-svc-account', usernameVariable: 'SVCUSERNAME', passwordVariable: 'SVCPASSWD')])
+        { //get username and password from usernamePassword Jenkins global credential representing service account that stores credentials for dockerhub
+            withCredentials(sshUserPrivateKey(credentialsId: 'ansible_deployed_cloud_vm', keyVariable: 'MY_SSH_KEY', passwordVariable: 'MY_SSH_USERNAME' )){
+                sh '''
+                    ssh -i $MY_SSH_KEY ${MY_SSH_USERNAME}@${CLOUD_VM_IP} "docker login --username ${SVCUSERNAME} --password ${SVCPASSWD}"
+                '''
+            }
 
 
 
 
-
-
-
-
-
+            
+        }
+    }
 
         
     }
