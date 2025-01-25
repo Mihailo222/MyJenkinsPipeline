@@ -126,6 +126,7 @@ pipeline {
 
 def checkServiceAccount(String credentialsId, String username, String password){
 //prima credential iz COMMON-a
+"ls -l".execute()
 
 }
 
