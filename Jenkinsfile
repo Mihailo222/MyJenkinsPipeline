@@ -87,6 +87,8 @@ pipeline {
         script {
 
         for ( String svc_acc : serviceAccounts ) {
+
+        echo "SERVICE ACCOUNT USED FOR LOGGING IN: ${svc_acc}"
         
         withCredentials([
             usernamePassword(credentialsId: 'dockerhub-svc-account', usernameVariable: 'SVCUSERNAME', passwordVariable: 'SVCPASSWD')        
