@@ -78,64 +78,10 @@ pipeline {
     }
     }*/
 
-    stage('Check DockerHub credentials ') { // HOCU DA POST OVOG STAGE-A BRISE FOLDER /root/.docker/config.json. !!!
+    stage('Check DockerHub credentials ') { 
 
-
-        
         steps {
-
-        script {
-
-        for ( String svc_acc : serviceAccounts ) {
-
-        echo "SERVICE ACCOUNT USED FOR LOGGING IN: ${svc_acc}"
-        
-        withCredentials([
-            usernamePassword(credentialsId: "${svc_acc}", usernameVariable: 'SVCUSERNAME', passwordVariable: 'SVCPASSWD')        
-        ])
-        { //get username and password from usernamePassword Jenkins global credential representing service account that stores credentials for dockerhub
-         withCredentials([
-             sshUserPrivateKey(credentialsId: 'ansible_deployed_cloud_vm', keyFileVariable: 'MY_SSH_KEY', usernameVariable: 'MY_SSH_USERNAME')
-         ]){
-            
-           /* sh '''
-                    ssh -i $MY_SSH_KEY ${MY_SSH_USERNAME}@${CLOUD_VM_IP} "docker login --username ${SVCUSERNAME} --password ${SVCPASSWD}"
-                '''*/
- //           script {
-                
-    
-                String SA_user="${SVCUSERNAME}"
-                String SA_pass="${SVCPASSWD}"
-              //  String credentialsId="dockerhub-svc-account"
-                String credentialsId=svc_acc
-             
-             /*   sh """
-                echo "${SA_user}"
-                echo "${SA_pass}"
-                
-                """*/
-              int status=checkServiceAccount(credentialsId, SA_user, SA_pass)
-
-              if(status == 0){
-                  echo "SUCESSFULLY LOGGED IN TO DOCKERHUB."
-                  return
-              } else {
-                  echo "FAILED TO LOG IN TO DOCKERHUB WITH SERVICE ACCOUNT ${credentialsId}"
-              }
-//            }
-
-         }   
-        }
-            
-        dir("/root/.docker"){
-            deleteDir()
-        }
-
-
-        }
-
-        }
-            
+            logInWithServiceAccount()
     }
 }
 
@@ -168,13 +114,63 @@ def checkServiceAccount(String credentialsId, String username, String password){
                   docker login --username \"${username}\" --password \"${password}\"
                   """,  returnStatus: true
                   )
-    
-    /*if (status == 0){
-        echo "SUCCESSFULLY LOGGED IN TO DOCKERHUB."
-    } else {
-        echo "FAILED TO LOG IN TO DOCKERHUB."
-    }*/
     return status
 }
+
+
+def logInWithServiceAccount(){
+         script {
+
+        for ( String svc_acc : serviceAccounts ) {
+
+        echo "SERVICE ACCOUNT USED FOR LOGGING IN: ${svc_acc}"
+        
+        withCredentials([
+            usernamePassword(credentialsId: "${svc_acc}", usernameVariable: 'SVCUSERNAME', passwordVariable: 'SVCPASSWD')        
+        ])
+        { //get username and password from usernamePassword Jenkins global credential representing service account that stores credentials for dockerhub
+         withCredentials([
+             sshUserPrivateKey(credentialsId: 'ansible_deployed_cloud_vm', keyFileVariable: 'MY_SSH_KEY', usernameVariable: 'MY_SSH_USERNAME')
+         ]){
+            
+                String SA_user="${SVCUSERNAME}"
+                String SA_pass="${SVCPASSWD}"
+                String credentialsId=svc_acc
+
+              int status=checkServiceAccount(credentialsId, SA_user, SA_pass)
+
+              if(status == 0){
+                  echo "SUCESSFULLY LOGGED IN TO DOCKERHUB."
+                  return
+              } else {
+                  echo "FAILED TO LOG IN TO DOCKERHUB WITH SERVICE ACCOUNT ${credentialsId}"
+              }
+         }   
+        }
+            
+        dir("/root/.docker"){
+            deleteDir()
+         }
+        }
+       }   
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
