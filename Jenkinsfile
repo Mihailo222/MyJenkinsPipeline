@@ -79,13 +79,16 @@ pipeline {
     }
     }*/
 
-    stage('Check DockerHub credentials ') { 
+    stage('Login to DockerHub with correct service account') { 
 
         steps {
+            echo "Stage: ${env.STAGE_NAME}:"
+            echo ""
             script {
             logInWithServiceAccount(serviceAccounts,sshCredentials)
             }
-    }
+        }
+
 }
 
         
@@ -150,7 +153,7 @@ def logInWithServiceAccount(String[] serviceAccounts, String sshKeyCredId){
               }
          }   
         }
-            
+        echo "Delete directory with stored DockerHub credentials ..."    
         dir("/root/.docker"){
             deleteDir()
          }
