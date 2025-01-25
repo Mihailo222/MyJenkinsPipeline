@@ -39,6 +39,32 @@ pipeline {
             }
             }
        }
+
+        
+        stage('Check docker version installed on cloud deployable VM'){
+            steps{
+
+            echo "Stage: ${env.STAGE_NAME}"
+            withCredentials([sshUserPrivateKey(credentialsId: 'ansible_deployed_cloud_vm', keyFileVariable: 'MY_SSH_KEY', usernameVariable: 'MY_SSH_USERNAME')]) //custom name for keyFileVariable for referencing later in the pipeline
+            {
+                sh '''
+                    ssh -i $MY_SSH_KEY ${MY_SSH_USERNAME}@${CLOUD_VM_IP} "docker -v"
+                '''
+            }
+            }
+       }
+
+
+
+
+
+
+
+
+
+
+
+        
     }
     post {
         always {
