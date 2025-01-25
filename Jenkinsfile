@@ -20,6 +20,18 @@ pipeline {
                 sh 'whoami'
             }
         }
+        stage('Login to cloud VM via SSH'){
+            steps{
+
+            echo "Stage: ${env.STAGE_NAME}"
+            withCredentials([sshUserPrivateKey(credentialsId: 'ansible_deployed_cloud_vm', keyFileVariable: 'MY_SSH_KEY')])
+            {
+                ssh '''
+                    ssh -i $MY_SSH_KEY myawesomeprojectwideuser@40.85.177.80 "whoami"
+                '''
+            }
+            }
+       }
     }
     post {
         always {
