@@ -81,7 +81,9 @@ pipeline {
     stage('Check DockerHub credentials ') { 
 
         steps {
+            script {
             logInWithServiceAccount()
+            }
     }
 }
 
@@ -119,7 +121,7 @@ def checkServiceAccount(String credentialsId, String username, String password){
 
 
 def logInWithServiceAccount(){
-         script {
+         
 
         for ( String svc_acc : serviceAccounts ) {
 
@@ -152,7 +154,7 @@ def logInWithServiceAccount(){
             deleteDir()
          }
         }
-       }   
+       
 }
 
 
